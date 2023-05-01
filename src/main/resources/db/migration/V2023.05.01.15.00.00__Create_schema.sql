@@ -1,0 +1,14 @@
+CREATE TABLE users
+(
+    id    BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name  VARCHAR(255) NOT NULL,
+    score BIGINT       NOT NULL DEFAULT 0
+);
+
+CREATE TABLE user_word
+(
+    id        BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    used_word VARCHAR(255) NOT NULL,
+    user_id   BIGINT       NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
