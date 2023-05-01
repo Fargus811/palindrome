@@ -7,6 +7,7 @@ import com.sergeev.palindrom.app.exception.NotFoundException;
 import com.sergeev.palindrom.app.repository.UsedWordsRepository;
 import com.sergeev.palindrom.app.repository.UserRepository;
 import com.sergeev.palindrom.app.repository.entity.UserEntity;
+import com.sergeev.palindrom.app.repository.entity.UserWordEntity;
 import com.sergeev.palindrom.app.service.PalindromeService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +33,9 @@ public class PalindromeServiceImpl implements PalindromeService {
         UserPalindromeResponse userPalindromeResponse = new UserPalindromeResponse();
         userPalindromeResponse.setUserName(userEntity.getName());
         if (isPalindrome(userPalindromeRequest.getPalindrome())) {
-            if (isWordUsedByUser(userPalindromeRequest.getUserId(), userPalindromeRequest.getPalindrome())) {
+            if (isWordUsedByUser(userEntity, userPalindromeRequest.getPalindrome())) {
+                usedWordsRepository.save(UserWordEntity.builder().usedWord(userPalindromeRequest.getPalindrome())
+                        .user(userEntity).build());
                 updateUserScore(userEntity, score);
                 lastAttemptDescription = "Palindrome! Score: " + userEntity.getScore();
             } else {
@@ -51,10 +54,8 @@ public class PalindromeServiceImpl implements PalindromeService {
         userRepository.save(userEntity);
     }
 
-    public boolean isWordUsedByUser(Long userId, String word) {
-        UserEntity user = new UserEntity();
-        user.setId(userId);
-        return usedWordsRepository.findByUserAndUsedWord(user, word).isEmpty();
+    public boolean isWordUsedByUser(UserEntity userEntity, String word) {
+        return usedWordsRepository.findByUserAndUsedWord(userEntity, word).isEmpty();
     }
 
     public boolean isPalindrome(String word) {

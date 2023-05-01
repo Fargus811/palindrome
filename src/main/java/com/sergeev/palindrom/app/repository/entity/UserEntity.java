@@ -38,5 +38,5 @@ public class UserEntity {
     private Long score;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserWord> usedWords = new ArrayList<>();
+    private List<UserWordEntity> usedWords = new ArrayList<>();
 }

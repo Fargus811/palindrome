@@ -1,13 +1,13 @@
 package com.sergeev.palindrom.app.repository;
 
 import com.sergeev.palindrom.app.repository.entity.UserEntity;
-import com.sergeev.palindrom.app.repository.entity.UserWord;
+import com.sergeev.palindrom.app.repository.entity.UserWordEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UsedWordsRepository extends JpaRepository<UserWord, Long> {
+public interface UsedWordsRepository extends JpaRepository<UserWordEntity, Long> {
 
-    Optional<UserEntity> findByUserAndUsedWord(UserEntity user, String word);
+    Optional<UserWordEntity> findByUserAndUsedWord(UserEntity user, String word);
 }
 

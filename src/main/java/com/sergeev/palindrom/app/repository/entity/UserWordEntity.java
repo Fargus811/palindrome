@@ -1,6 +1,7 @@
 package com.sergeev.palindrom.app.repository.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,9 +19,10 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "user_word")
-public class UserWord {
+public class UserWordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
